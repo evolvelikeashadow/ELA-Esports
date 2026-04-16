@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#00d2ff">
+    <meta name="description" content="ELA ESPORTS - National Free Fire Esports Authority">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ELA ESPORTS | National Free Fire Authority</title>
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="style.css">
+
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@400;600;700&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+    <!-- GSAP -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+
+</head>
+<body>
+
+    <!-- BACKGROUND VIDEO -->
+    <div class="video-bg">
+        <video autoplay muted loop playsinline>
+            <source src="assets/12421542_3840_2160_30fps.mp4" type="video/mp4">
+        </video>
+    </div>
+
+    <!-- NOTIFICATION CONTAINER -->
+    <div id="notificationContainer" class="notification-container"></div>
+
+    <!-- NAVBAR -->
+    <nav id="navbar">
+        <div class="logo-container">
+            <img src="assets/ELA.png" alt="ELA Logo" class="nav-logo">
+            <div class="logo">ELA<span>ESPORTS</span></div>
+        </div>
+
+        <ul class="nav-links">
+            <li><a href="index.html"><i class="fas fa-home"></i> Home</a></li>
+            <li><a href="about.html"><i class="fas fa-info-circle"></i> About</a></li>
+            <li><a href="events.html"><i class="fas fa-trophy"></i> Events</a></li>
+            <li><a href="players.html"><i class="fas fa-id-card"></i> Players</a></li>
+            <li><a href="partner.html"><i class="fas fa-handshake"></i> Partner</a></li>
+            <li><a href="rules.html"><i class="fas fa-book"></i> Rules</a></li>
+<li><a href="admin-login.html" class="admin-link">Admin</a></li>
+        </ul>
+
+        <div class="nav-right">
+            <a href="login.html" class="nav-btn" id="authLink">Login/Register</a>
+            <div class="user-menu" id="userMenu" style="display: none;">
+                <i class="fas fa-user-circle"></i>
+                <span id="userNameDisplay">User</span>
+                <div class="dropdown">
+                    <a href="profile.html"><i class="fas fa-user"></i> My Profile</a>
+                    <a href="events.html"><i class="fas fa-trophy"></i> My Tournaments</a>
+                    <a href="#" id="logoutBtn"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="menu-toggle" id="menu-toggle">
+            <i class="fas fa-bars"></i>
+        </div>
+    </nav>
+
+    <!-- HERO -->
+    <section id="home" class="hero">
+        <div class="hero-overlay"></div>
+
+        <div class="hero-content reveal">
+            <p class="tagline">India's Trusted Free Fire Esports Organisation</p>
+
+            <!-- FLOAT + GLOW -->
+            <h1 id="animatedHeader" class="hero-float text-glow-breath">
+                EVOLVE LIKE A SHADOW
+            </h1>
+
+            <!-- BREATHING GLOW -->
+            <div class="collab-banner glow-breath">
+                <span>ELA ESPORTS</span>
+                <i class="x-icon">×</i>
+                <span>FFM COMMUNITY</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- PLATFORM FEATURES -->
+    <section id="about" class="section container">
+        <h2 class="section-title">PLATFORM FEATURES</h2>
+
+        <div class="feature-grid">
+            <div class="feature-card reveal-up card-float glow-breath">
+                <div class="icon">🏆</div>
+                <h3>Tournaments</h3>
+                <p>Official Free Fire management & verified match officials.</p>
+            </div>
+
+            <div class="feature-card reveal-up card-float glow-breath">
+                <div class="icon">📍</div>
+                <h3>LAN Events</h3>
+                <p>National competitive network & offline championships.</p>
+            </div>
+
+            <div class="feature-card reveal-up card-float glow-breath">
+                <div class="icon">🛡️</div>
+                <h3>ORG System</h3>
+                <p>Verified UID system and player/team database management.</p>
+            </div>
+
+            <div class="feature-card reveal-up card-float glow-breath">
+                <div class="icon">📊</div>
+                <h3>Profiles</h3>
+                <p>Professional digital ID cards for every registered player.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- EVENTS -->
+    <section id="events" class="section container">
+        <h2 class="section-title">EVENTS</h2>
+<div class="tournament-tabs">
+  <button class="tab-btn active" onclick="loadTournaments('upcoming')">Upcoming</button>
+  <button class="tab-btn" onclick="loadTournaments('ongoing')">Ongoing</button> 
+  <button class="tab-btn" onclick="loadTournaments('completed')">Past</button>
+</div>
+
+<h3 class="section-title">UPCOMING TOURNAMENTS</h3>
+<div id="upcoming-events-list" class="event-grid tournament-grid"></div>
+
+<h3 class="section-title ongoing-title" style="display:none;">ONGOING TOURNAMENTS</h3>
+<div id="ongoing-events-list" class="event-grid tournament-grid" style="display:none;"></div>
+
+<h3 class="section-title past-title">PAST TOURNAMENTS</h3>
+<div id="past-events-list" class="event-grid tournament-grid"></div>
+
+
+    <!-- PLAYERS / DIGITAL ID -->
+    <section id="players" class="section container">
+        <h2 class="section-title">ORG PLAYER IDENTIFICATION</h2>
+
+        <div class="id-card-container reveal-up">
+            <div class="id-card card-float glow-breath" id="digital-id">
+                <div class="id-header">
+                    <div class="id-logo">ELA</div>
+                    <div class="id-auth">OFFICIAL ORG PLAYER</div>
+                </div>
+
+                <div class="id-body">
+                    <div class="id-photo-placeholder"></div>
+                    <div class="id-details">
+                        <p>NAME: <span id="id-name">PLAYER_NAME</span></p>
+                        <p>UID: <span id="id-uid">8823194201</span></p>
+                        <p>TEAM: <span id="id-team">VORTEX LEGIO</span></p>
+                        <p>ORG ID: <span id="id-org">ELA-7721</span></p>
+                    </div>
+                </div>
+
+                <div class="id-footer">
+                    Powered by FFM COMMUNITY
+                </div>
+            </div>
+
+            <p class="id-hint">
+                Card UI - Individual ID generation available for registered teams.
+            </p>
+        </div>
+    </section>
+
+    <!-- JOIN ORG -->
+    <section id="join" class="section container">
+        <div class="form-wrapper reveal-up">
+            <h2 class="section-title">ORG REGISTRATION</h2>
+
+            <form id="orgForm">
+                <div class="form-row">
+                    <input type="text" id="orgTeamName" placeholder="Team Name" required>
+                    <input type="text" id="playerName" placeholder="Player Name" required>
+                </div>
+
+                <div class="form-row">
+                    <input type="text" id="uid" placeholder="Free Fire UID" required>
+                    <input type="text" id="orgcity" placeholder="City" required>
+                </div>
+
+                <div class="form-row">
+                    <input type="tel" id="phone" placeholder="Contact Number" required>
+                    <input type="text" id="insta" placeholder="Instagram ID" required>
+                </div>
+
+                <button type="submit" class="submit-btn">
+                    SUBMIT TO MANAGEMENT
+                </button>
+            </form>
+        </div>
+    </section>
+
+    <!-- PARTNERS -->
+    <section id="partners" class="section container">
+        <div class="proposal-box reveal-up card-float glow-breath">
+            <h2>Why Partner With ELA ESPORTS?</h2>
+
+            <div class="proposal-grid">
+                <ul>
+                    <li>National Level Reach</li>
+                    <li>FFM Community Backed</li>
+                    <li>Verified Competitive Network</li>
+                    <li>Online + LAN Promotions</li>
+                </ul>
+
+                <div class="promo-includes">
+                    <p>
+                        <strong>Includes:</strong>
+                        Logo on Posters, Stage Branding, Trophy Sponsorship, Social Reels.
+                    </p>
+                </div>
+            </div>
+
+            <div class="sponsor-ui-placeholder">
+                <p>Official Sponsor Slots Open</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- VERIFIED ORGS -->
+    <section id="verified-orgs" class="section container">
+        <h2 class="section-title">VERIFIED ORGS</h2>
+        <div id="verified-org-list" class="event-grid">
+            <!-- Verified orgs will be injected here -->
+        </div>
+    </section>
+
+    <!-- ADMIN PANEL -->
+    <div class="admin-modal" id="adminModal">
+        <div class="admin-panel">
+            <h2>MANAGEMENT DASHBOARD</h2>
+
+            <div id="adminList"></div>
+
+            <input type="text" id="admin-event-name" class="input-box" placeholder="Tournament Name">
+            <input type="text" id="admin-event-desc" class="input-box" placeholder="Prize, Slots, Mode">
+
+            <button class="btn-main" id="addTournamentBtn">ADD TOURNAMENT</button>
+            <button id="close-admin-btn" class="btn-close">CLOSE</button>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="container footer-grid">
+            <div class="footer-about">
+                <div class="logo">ELA<span>ESPORTS</span></div>
+                <p class="about-text">The National Free Fire Esports Authority of India. Operating a structured, transparent, and community-backed competitive network for professional athletes.</p>
+                <div class="ffm-tag">Official FFM Community Partner</div>
+            </div>
+            <div class="footer-links">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="about.html">About Authority</a></li>
+                    <li><a href="#events">Tournaments</a></li>
+                    <li><a href="#teams">Verified Teams</a></li>
+                    <li><a href="#join">Register ORG</a></li>
+                </ul>
+            </div>
+            <div class="footer-contact">
+                <h4>Official Contact</h4>
+                <p>Partnerships: <span>collab@elaesports.in</span></p>
+                <p>Verification Support: <span>support@elaesports.in</span></p>
+                <p>Instagram: <span>@ela_esports</span></p>
+            </div>
+        </div> 
+        <div class="footer-bottom">
+            <p>&copy; 2026 ELA ESPORTS. All Rights Reserved. Led by FFM Community Lead.</p>
+            <p class="legal">Official Match Officials • Anti-Cheat Protocol Active</p>
+        </div>
+    </footer>
+
+    <!-- JS -->
+    <script type="module" src="script.js"></script>
+
+    <!-- LOGIN / REGISTER MODAL -->
+    <div id="authModal" class="admin-modal auth-modal">
+        <div class="admin-panel">
+            <h2 id="authTitle">LOGIN</h2>
+
+            <input type="text" id="authUsername" class="input-box" placeholder="Username">
+            <input type="password" id="authPassword" class="input-box" placeholder="Password">
+
+            <button class="btn-main" id="loginBtn">LOGIN</button>
+            <button class="btn-close" id="registerBtn">REGISTER</button>
+            <button class="btn-close" id="closeAuthBtn">CLOSE</button>
+        </div>
+    </div>
+
+</body>
+</html>
+

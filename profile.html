@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Professional Profile | ELA ESPORTS</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="profile-modal.css">
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    .professional-profile {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    .profile-container {
+      display: grid;
+      grid-template-columns: 350px 1fr;
+      gap: 40px;
+      margin-top: 40px;
+    }
+    .profile-sidebar {
+      background: var(--glass-bg);
+      backdrop-filter: var(--glass-blur);
+      border: 1px solid var(--glass-border);
+      border-radius: 20px;
+      padding: 30px;
+      height: fit-content;
+    }
+    .avatar-large {
+      width: 180px;
+      height: 180px;
+      border-radius: 50%;
+      border: 4px solid var(--neon-blue);
+      margin: 0 auto 20px;
+      display: block;
+      object-fit: cover;
+      box-shadow: 0 0 30px rgba(0, 210, 255, 0.4);
+    }
+    .profile-actions {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+    .profile-main {
+      display: grid;
+      gap: 30px;
+    }
+    .section-card {
+      background: var(--glass-bg);
+      backdrop-filter: var(--glass-blur);
+      border: 1px solid var(--glass-border);
+      border-radius: 20px;
+      padding: 30px;
+    }
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      margin-bottom: 25px;
+      padding-bottom: 15px;
+      border-bottom: 1px solid rgba(0, 210, 255, 0.2);
+    }
+    .section-icon {
+      width: 45px;
+      height: 45px;
+      background: linear-gradient(135deg, var(--neon-blue), var(--neon-green));
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: black;
+      font-size: 1.2rem;
+      font-weight: bold;
+    }
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 20px;
+    }
+    .stat-item {
+      text-align: center;
+      padding: 20px;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 15px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    .stat-number {
+      display: block;
+      font-size: 2.5rem;
+      font-weight: 800;
+      background: linear-gradient(135deg, var(--neon-blue), var(--neon-green));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 5px;
+    }
+    .info-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+    }
+    .info-item {
+      background: rgba(255, 255, 255, 0.03);
+      padding: 20px;
+      border-radius: 12px;
+      border-left: 4px solid var(--neon-blue);
+    }
+    .info-label {
+      font-size: 0.85rem;
+      color: var(--text-dim);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 8px;
+      font-weight: 600;
+    }
+    .info-value {
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: white;
+    }
+    .achievements-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 15px;
+    }
+    .achievement-card {
+      text-align: center;
+      padding: 20px 15px;
+      background: rgba(0, 255, 179, 0.1);
+      border: 1px solid var(--neon-green);
+      border-radius: 12px;
+      transition: all 0.3s ease;
+    }
+    .achievement-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 25px rgba(0, 255, 179, 0.3);
+    }
+    .achievement-icon {
+      font-size: 2.5rem;
+      color: var(--neon-green);
+      margin-bottom: 10px;
+    }
+    .btn-primary {
+      background: linear-gradient(135deg, var(--neon-blue), var(--neon-green));
+      color: black;
+      border: none;
+      padding: 14px 28px;
+      border-radius: 12px;
+      font-weight: 700;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      width: 100%;
+      margin-top: 20px;
+    }
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 25px rgba(0, 210, 255, 0.4);
+    }
+    @media (max-width: 768px) {
+      .profile-container {
+        grid-template-columns: 1fr;
+        gap: 30px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- BACKGROUND VIDEO -->
+  <div class="video-bg">
+    <video autoplay muted loop playsinline>
+      <source src="assets/12421542_3840_2160_30fps.mp4" type="video/mp4">
+    </video>
+  </div>
+
+  <div id="notificationContainer" class="notification-container"></div>
+
+  <!-- NAVBAR -->
+  <nav id="navbar">
+    <div class="logo-container">
+      <img src="assets/ELA.png" alt="ELA Logo" class="nav-logo">
+      <div class="logo">ELA<span>ESPORTS</span></div>
+    </div>
+    <ul class="nav-links">
+      <li><a href="index.html"><i class="fas fa-home"></i> Home</a></li>
+      <li><a href="events.html"><i class="fas fa-trophy"></i> Events</a></li>
+      <li><a href="players.html"><i class="fas fa-id-card"></i> Players</a></li>
+    </ul>
+    <div class="nav-right">
+      <div class="user-menu" id="userMenu">
+        <i class="fas fa-user-circle"></i>
+        <span id="userNameDisplay">Profile</span>
+        <div class="dropdown">
+          <a href="#" onclick="generateIDCard()"><i class="fas fa-id-card"></i> Generate ID Card</a>
+          <a href="#" id="logoutBtnNav"><i class="fas fa-sign-out-alt"></i> Logout</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <div class="professional-profile">
+    <section class="profile-container">
+      <!-- SIDEBAR -->
+      <div class="profile-sidebar">
+        <img id="profileAvatar" src="assets/character_1.png" alt="Profile Avatar" class="avatar-large">
+        <input type="file" id="avatarUpload" accept="image/*" style="display: none;" onchange="handleAvatarUpload(event)">
+        <div class="profile-actions">
+          <button onclick="document.getElementById('avatarUpload').click();" class="btn-primary">
+            <i class="fas fa-camera"></i> Change Photo
+          </button>
+          <button onclick="generateIDCard()" class="btn-primary">
+            <i class="fas fa-id-card"></i> ID Card
+          </button>
+          <button onclick="shareProfile()" class="btn-primary">
+            <i class="fas fa-share-alt"></i> Share Profile
+          </button>
+        </div>
+      </div>
+
+      <!-- MAIN CONTENT -->
+      <div class="profile-main">
+        <!-- STATS OVERVIEW -->
+        <div class="section-card">
+          <div class="section-header">
+            <div class="section-icon">
+              <i class="fas fa-chart-line"></i>
+            </div>
+            <h2>Profile Statistics</h2>
+          </div>
+          <div class="stats-grid">
+            <div class="stat-item">
+              <span class="stat-number" id="totalTournaments">0</span>
+              <span>Total Tournaments</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-number" id="winRate">0%</span>
+              <span>Win Rate</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-number" id="rankPoints">0</span>
+              <span>Rank Points</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-number" id="matchesPlayed">0</span>
+              <span>Matches Played</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- PERSONAL INFO -->
+        <div class="section-card">
+          <div class="section-header">
+            <div class="section-icon">
+              <i class="fas fa-user"></i>
+            </div>
+            <h2>Personal Information</h2>
+          </div>
+          <div class="info-grid">
+            <div class="info-item">
+              <div class="info-label">Full Name</div>
+              <div class="info-value" id="displayName">Loading...</div>
+            </div>
+            <div class="info-item">
+              <div class="info-label">Email</div>
+              <div class="info-value" id="displayEmail">Loading...</div>
+            </div>
+            <div class="info-item">
+              <div class="info-label">Phone</div>
+              <div class="info-value" id="displayPhone">Loading...</div>
+            </div>
+            <div class="info-item">
+              <div class="info-label">Location</div>
+              <div class="info-value" id="displayLocation">Loading...</div>
+            </div>
+          </div>
+          <button class="btn-primary" onclick="editPersonalInfo()">
+            <i class="fas fa-edit"></i> Edit Personal Info
+          </button>
+
+        </div>
+
+        <!-- GAMING PROFILE -->
+        <div class="section-card">
+          <div class="section-header">
+            <div class="section-icon">
+              <i class="fas fa-gamepad"></i>
+            </div>
+            <h2>Gaming Profile</h2>
+          </div>
+          <div class="info-grid">
+            <div class="info-item">
+              <div class="info-label">IGN</div>
+              <div class="info-value" id="displayIGN">Loading...</div>
+            </div>
+            <div class="info-item">
+              <div class="info-label">UID</div>
+              <div class="info-value" id="displayUID">Loading...</div>
+            </div>
+            <div class="info-item">
+              <div class="info-label">Role</div>
+              <div class="info-value" id="displayRole">Loading...</div>
+            </div>
+            <div class="info-item">
+              <div class="info-label">Device</div>
+              <div class="info-value" id="displayDevice">Loading...</div>
+            </div>
+            <div class="info-item">
+              <div class="info-label">Experience</div>
+              <div class="info-value" id="displayExperience">Loading...</div>
+            </div>
+            <div class="info-item">
+              <div class="info-label">Current Team</div>
+              <div class="info-value" id="displayTeam">Loading...</div>
+            </div>
+          </div>
+          <button class="btn-primary" onclick="editGamingInfo()">
+            <i class="fas fa-edit"></i> Edit Gaming Profile
+          </button>
+
+        </div>
+
+        <!-- ACHIEVEMENTS -->
+        <div class="section-card">
+          <div class="section-header">
+            <div class="section-icon">
+              <i class="fas fa-medal"></i>
+            </div>
+            <h2>Achievements</h2>
+          </div>
+          <div class="achievements-grid" id="achievementsList">
+            <div class="achievement-card">
+              <div class="achievement-icon">
+                <i class="fas fa-trophy"></i>
+              </div>
+              <span>Tournament Winner</span>
+            </div>
+            <div class="achievement-card">
+              <div class="achievement-icon">
+                <i class="fas fa-fire"></i>
+              </div>
+              <span>10 Kill Game</span>
+            </div>
+            <div class="achievement-card">
+              <div class="achievement-icon">
+                <i class="fas fa-crown"></i>
+              </div>
+              <span>Top 10 Finish</span>
+            </div>
+            <div class="achievement-card">
+              <div class="achievement-icon">
+                <i class="fas fa-star"></i>
+              </div>
+              <span>5-Star Rating</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- EDIT MODALS -->
+  <div id="editModal" class="modal">
+    <div class="modal-content">
+      <span class="close-modal">&times;</span>
+      <h2 id="modalTitle">Edit Profile</h2>
+      <form id="editForm">
+        <!-- Dynamic form content -->
+      </form>
+    </div>
+  </div>
+
+
+  <script type="module" src="script.js"></script>
+  <script>
+    // Profile-specific functions
+    function generateIDCard() {
+      showNotification('ID card generator feature coming soon!', 'info');
+    }
+    
+    function shareProfile() {
+      if (navigator.share) {
+        navigator.share({
+          title: 'My ELA Profile',
+          url: window.location.href
+        });
+      } else {
+        navigator.clipboard.writeText(window.location.href);
+        showNotification('Profile link copied to clipboard!');
+      }
+    }
+    
+    // FIXED: Stable profile load - NO redirect if logged in
+    document.addEventListener('DOMContentLoaded', function() {
+      console.log('Profile DOM ready');
+      
+      // Navbar always
+      if (typeof updateNavbar === 'function') updateNavbar();
+      
+      // STABLE USER CHECK - localStorage OR Firebase
+      const elaUser = localStorage.getItem('elaUser');
+      if (elaUser) {
+        console.log('✅ User logged in - load profile');
+        // Load even if script.js not fully loaded
+        if (typeof window.loadUserProfile === 'function') {
+          window.loadUserProfile();
+        } else {
+          // Wait max 3s
+          let attempts = 0;
+          const loadProfile = () => {
+            attempts++;
+            if (typeof window.loadUserProfile === 'function') {
+              window.loadUserProfile();
+            } else if (attempts < 15) {
+              setTimeout(loadProfile, 200);
+            } else {
+              console.log('⚠️ script.js loadUserProfile unavailable - using local data');
+            }
+          };
+          loadProfile();
+        }
+        return;
+      }
+      
+      // No user → login
+      console.log('❌ No login data → login.html');
+      window.location.href = 'login.html';
+      
+    });
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Team Registration | ELA ESPORTS</title>
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="style.css">
+
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@400;600;700&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav id="navbar">
+    <div class="logo-container">
+        <img src="assets\ELA.png" alt="ELA Logo" class="nav-logo">
+        <div class="logo">ELA<span>ESPORTS</span></div>
+    </div>
+
+    <ul class="nav-links">
+        <li><a href="index.html"><i class="fas fa-home"></i> Home</a></li>
+        <li><a href="about.html"><i class="fas fa-info-circle"></i> About</a></li>
+        <li><a href="events.html"><i class="fas fa-trophy"></i> Events</a></li>
+        <li><a href="players.html"><i class="fas fa-id-card"></i> Players</a></li>
+        <li><a href="partner.html"><i class="fas fa-handshake"></i> Partner</a></li>
+        <li><a href="rules.html"><i class="fas fa-book"></i> Rules</a></li>
+        <li><a href="admin.html" class="admin-link">Admin</a></li>
+    </ul>
+
+    <div class="nav-right">
+        <a href="login.html" class="nav-btn" id="authLink">Login/Register</a>
+        <a href="registration.html" class="nav-btn" id="registerLink">Register</a>
+        <div class="user-menu" id="userMenu" style="display: none;">
+            <i class="fas fa-user-circle"></i>
+            <span id="userNameDisplay">User</span>
+            <div class="dropdown">
+                <a href="profile.html"><i class="fas fa-user"></i> My Profile</a>
+                <a href="events.html"><i class="fas fa-trophy"></i> My Tournaments</a>
+                <a href="#" id="logoutBtnNav"><i class="fas fa-sign-out-alt"></i> Logout</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="menu-toggle" id="menu-toggle">
+        <i class="fas fa-bars"></i>
+    </div>
+</nav>
+
+<!-- TEAM REGISTRATION SECTION -->
+<section class="section container">
+    <h1 class="section-title">TEAM REGISTRATION</h1>
+
+    <div class="form-wrapper">
+        <form id="teamForm">
+            <div class="form-row">
+                <input type="text" id="teamTeamName" placeholder="Team Name" required>
+                <input type="text" id="captainName" placeholder="Captain Name" required>
+            </div>
+
+            <div class="form-row">
+                <input type="email" id="captainEmail" placeholder="Captain Email" required>
+                <input type="tel" id="captainPhone" placeholder="Captain Phone" required>
+            </div>
+
+            <div class="form-row">
+                <input type="text" id="tournamentName" placeholder="Tournament Name" required readonly>
+                <input type="number" id="teamSize" placeholder="Team Size (5)" required>
+            </div>
+
+            <div class="form-row">
+                <textarea id="teamDescription" placeholder="Team Description (optional)" rows="4"></textarea>
+            </div>
+
+            <button type="submit" class="submit-btn">REGISTER TEAM</button>
+        </form>
+    </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+    <div class="footer-grid">
+        <div class="footer-section">
+            <h4>ABOUT ELA ESPORTS</h4>
+            <p>India's trusted Free Fire Esports organization providing verified tournaments, player management, and LAN events.</p>
+        </div>
+        <div class="footer-section">
+            <h4>QUICK LINKS</h4>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="events.html">Events</a></li>
+                <li><a href="players.html">Players</a></li>
+                <li><a href="partner.html">Partner</a></li>
+            </ul>
+        </div>
+        <div class="footer-section">
+            <h4>CONTACT</h4>
+            <p><i class="fas fa-envelope"></i> contact@elaesports.in</p>
+            <p><i class="fas fa-phone"></i> +91 XXXX-XXX-XXX</p>
+        </div>
+        <div class="footer-section">
+            <h4>FOLLOW US</h4>
+            <div class="social-links">
+                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="#"><i class="fab fa-youtube"></i></a>
+                <a href="#"><i class="fab fa-discord"></i></a>
+            </div>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <p>&copy; 2024 ELA ESPORTS. All rights reserved. | <a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a></p>
+    </div>
+</footer>
+
+<!-- Notification Container -->
+<div id="notificationContainer" class="notification-container"></div>
+
+<!-- Script -->
+<script type="module" src="script.js"></script>
+
+</body>
+</html>

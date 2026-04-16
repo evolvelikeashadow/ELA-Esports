@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Manage Teams | ELA ESPORTS</title>
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body>
+  <div class="video-bg">
+    <video autoplay muted loop playsinline>
+      <source src="assets/12421542_3840_2160_30fps.mp4" type="video/mp4">
+    </video>
+  </div>
+
+  <div id="notificationContainer" class="notification-container"></div>
+
+  <!-- NAVBAR -->
+  <nav id="navbar">
+    <div class="logo-container">
+      <img src="assets/ELA.png" alt="ELA Logo" class="nav-logo">
+      <div class="logo">ELA<span>ESPORTS</span></div>
+    </div>
+    <ul class="nav-links">
+      <li><a href="index.html"><i class="fas fa-home"></i> Home</a></li>
+      <li><a href="profile.html"><i class="fas fa-user"></i> Profile</a></li>
+      <li><a href="events.html"><i class="fas fa-trophy"></i> Events</a></li>
+    </ul>
+    <div class="nav-right">
+      <div class="user-menu" id="userMenu">
+        <i class="fas fa-user-circle"></i>
+        <span id="userNameDisplay">User</span>
+      </div>
+    </div>
+  </nav>
+
+  <section class="section container">
+    <h1 class="section-title">My Teams</h1>
+
+    <div class="teams-section">
+      <div class="create-team reveal-up">
+        <h3>Create New Team</h3>
+        <form id="createTeamForm">
+          <input type="text" id="teamName" placeholder="Team Name" required>
+          <textarea id="teamDesc" placeholder="Team Description (Optional)"></textarea>
+          <button type="submit" class="btn-main">Create Team</button>
+        </form>
+      </div>
+
+      <div class="teams-list reveal-up">
+        <h3>Your Teams</h3>
+        <div id="userTeamsList">
+          <p>No teams created yet. Create your first team above!</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script type="module" src="script.js"></script>
+</body>
+</html>
+

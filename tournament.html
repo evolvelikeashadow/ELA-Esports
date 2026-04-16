@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tournament Registration - ELA ESPORTS</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+</head>
+<body>
+  <div class="video-bg">
+    <video autoplay muted loop playsinline>
+      <source src="assets/12421542_3840_2160_30fps.mp4" type="video/mp4">
+    </video>
+  </div>
+
+  <section class="section container">
+    <h2 id="tTitle" class="section-title">Tournament Registration</h2>
+
+    <div class="page-header">
+      <button onclick="window.history.back()" class="back-btn">
+        <i class="fas fa-arrow-left"></i> Back to Tournaments
+      </button>
+    </div>
+
+    <div class="tournament-registration">
+      <h3>Team Registration Form</h3>
+      <p id="tournamentInfo">Select a tournament from homepage to register</p>
+      
+      <form id="teamRegistrationForm">
+        <div class="form-row">
+          <input type="text" id="teamName" placeholder="Team Name *" required>
+          <input type="text" id="captainName" placeholder="Captain Name" required>
+        </div>
+        <div class="form-row">
+          <input type="email" id="captainEmail" placeholder="Captain Email" required>
+          <input type="tel" id="captainPhone" placeholder="Phone">
+        </div>
+        <div class="form-row">
+          <select id="teamSize" required>
+            <option value="">Team Size</option>
+            <option value="4">4 Players</option>
+            <option value="5">5 Players</option>
+          </select>
+          <input type="text" id="teamDescription" placeholder="Team Description (Optional)">
+        </div>
+        <button type="submit" class="submit-btn" id="submitRegistration" disabled>
+          Select Tournament First
+        </button>
+      </form>
+
+      <div class="registration-status" id="registrationStatus" style="display:none;">
+        <p>Registration submitted! Awaiting admin approval (24hrs).</p>
+      </div>
+    </div>
+
+    <h3 class="section-title">Registered Teams</h3>
+    <div id="registeredTeams" class="event-grid">
+      <p>No teams registered for this tournament yet</p>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container">
+      <p>&copy; 2026 ELA ESPORTS</p>
+    </div>
+  </footer>
+
+  <script type="module" src="script.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const urlParams = new URLSearchParams(window.location.search);
+      const tournamentName = urlParams.get('name');
+      
+      if (tournamentName) {
+        document.getElementById('tournamentInfo').textContent = decodeURIComponent(tournamentName);
+        document.getElementById('submitRegistration').disabled = false;
+        document.getElementById('submitRegistration').textContent = 'Submit Registration';
+        
+        // Pre-fill user data
+        const user = JSON.parse(localStorage.getItem('elaUser'));
+        if (user && user.name) {
+          document.getElementById('captainName').value = user.name;
+          document.getElementById('captainEmail').value = user.email;
+          document.getElementById('teamSize').value = '5';
+        }
+      }
+
+      const form = document.getElementById('teamRegistrationForm');
+      form.addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        if (typeof showNotification === 'undefined') {
+          alert('Main script not loaded. Refresh page.');
+          return;
+        }
+        
+        const formData = {
+          teamName: document.getElementById('teamName').value.trim(),
+          captainName: document.getElementById('captainName').value.trim(),
+          captainEmail: document.getElementById('captainEmail').value.trim(),
+          captainPhone: document.getElementById('captainPhone').value,
+          teamSize: document.getElementById('teamSize').value,
+          tournamentName: decodeURIComponent(urlParams.get('name'))
+        };
+
+        if (!formData.teamName || !formData.captainEmail) {
+          showNotification('Please fill team name and email', 'error');
+          return;
+        }
+
+        // LocalStorage fallback + notification (Firebase optional)
+        let registrations = JSON.parse(localStorage.getItem('registrations') || '[]');
+        registrations.push({
+          ...formData,
+          status: 'pending',
+          timestamp: new Date().toISOString()
+        });
+        localStorage.setItem('registrations', JSON.stringify(registrations));
+        
+        showNotification('Team registered! Awaiting admin approval.', 'success');
+        form.reset();
+        document.getElementById('registrationStatus').style.display = 'block';
+      });
+    });
+  </script>
+</body>
+</html>
+

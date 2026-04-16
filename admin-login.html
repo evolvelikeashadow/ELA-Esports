@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Login | ELA ESPORTS</title>
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body>
+  <div class="video-bg">
+    <video autoplay muted loop playsinline>
+      <source src="assets/12421542_3840_2160_30fps.mp4" type="video/mp4">
+    </video>
+  </div>
+
+  <div id="notificationContainer" class="notification-container"></div>
+
+  <nav id="navbar">
+    <div class="logo-container">
+      <img src="assets/ELA.png" alt="ELA Logo" class="nav-logo">
+      <div class="logo">ELA<span>ESPORTS</span></div>
+    </div>
+    <a href="index.html" class="nav-btn">← Back to Home</a>
+  </nav>
+
+  <section class="hero admin-hero">
+    <div class="hero-overlay"></div>
+    <div class="hero-content reveal">
+      <h1 class="hero-float">ADMIN PANEL</h1>
+      <p class="admin-subtitle">Tournament Management System</p>
+    </div>
+  </section>
+
+  <section class="section container">
+    <div class="form-wrapper admin-login-form reveal-up">
+      <h2>ADMIN LOGIN</h2>
+      <p>Enter admin credentials to access management dashboard</p>
+
+      <form id="adminLoginForm">
+        <div class="form-group">
+          <label for="adminEmail">Email</label>
+          <input type="email" id="adminEmail" class="input-box" placeholder="admin@elaesports.in" required>
+        </div>
+        <div class="form-group">
+          <label for="adminPassword">Password</label>
+          <input type="password" id="adminPassword" class="input-box" placeholder="Enter password" required>
+        </div>
+        <button type="submit" class="btn-main full-width">LOGIN TO ADMIN</button>
+      </form>
+
+    </div>
+  </section>
+
+
+  <script type="module" src="script.js"></script>
+</body>
+</html>
+

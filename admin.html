@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel - ELA ESPORTS</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+</head>
+<body>
+    <!-- NAVBAR -->
+    <nav id="navbar">
+        <div class="logo-container">
+assets/ELA.png
+            <div class="logo">ELA<span>ESPORTS</span></div>
+        </div>
+        <ul class="nav-links">
+            <li><a href="index.html"><i class="fas fa-home"></i> Home</a></li>
+            <li><a href="about.html"><i class="fas fa-info-circle"></i> About</a></li>
+            <li><a href="events.html"><i class="fas fa-trophy"></i> Events</a></li>
+            <li><a href="partner.html"><i class="fas fa-handshake"></i> Partner</a></li>
+            <li><a href="login.html"><i class="fas fa-sign-in-alt"></i> Login</a></li>
+            <li><a href="registration.html"><i class="fas fa-user-plus"></i> Register</a></li>
+            <li><a href="admin-login.html" class="admin-link"><i class="fas fa-cog"></i> Admin Login</a></li>
+        </ul>
+        <div class="nav-right">
+            <a href="login.html" class="nav-btn" id="authLink">Login/Register</a>
+            <div class="user-menu" id="userMenu" style="display: none;">
+                <i class="fas fa-user-circle"></i>
+                <span id="userNameDisplay">Admin</span>
+                <div class="dropdown">
+                    <a href="index.html"><i class="fas fa-home"></i> Go Home</a>
+                    <a href="#" id="logoutBtnNav"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                </div>
+            </div>
+        </div>
+        <div class="menu-toggle" id="menu-toggle">
+            <i class="fas fa-bars"></i>
+        </div>
+    </nav>
+
+    <!-- ADMIN PANEL -->
+    <section class="section container">
+        <h2 class="section-title">ADMIN DASHBOARD</h2>
+        <div class="admin-stats">
+            <div class="stat-card">
+                <h4>Total Players</h4>
+                <span id="totalPlayers">0</span>
+            </div>
+            <div class="stat-card">
+                <h4>Verified Players</h4>
+                <span id="verifiedPlayers">0</span>
+            </div>
+            <div class="stat-card">
+                <h4>Pending Verification</h4>
+                <span id="pendingPlayers">0</span>
+            </div>
+            <div class="stat-card">
+                <h4>Active Tournaments</h4>
+                <span id="activeTournaments">0</span>
+            </div>
+        </div>
+
+        <div class="admin-tabs">
+            <button class="admin-tab-btn active" data-tab="players">Player Verification</button>
+            <button class="admin-tab-btn" data-tab="tournaments">Tournament Management</button>
+<button class="admin-tab-btn" data-tab="registrations">Tournament Registrations</button>
+        <button class="admin-tab-btn" data-tab="orgs">ORG Management</button>
+        </div>
+
+        <div id="playersTab" class="admin-tab-content active">
+            <div class="admin-section">
+                <h3>Player Verification Queue</h3>
+                <div id="verificationTable" class="admin-table">
+                    <div class="table-header">
+                        <span>Name</span>
+                        <span>Email</span>
+                        <span>UID</span>
+                        <span>Role</span>
+                        <span>Experience</span>
+                        <span>Status</span>
+                        <span>Actions</span>
+                    </div>
+                    <div id="playersList" class="table-body">
+                        <p>Loading players...</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="tournamentsTab" class="admin-tab-content">
+            <div class="admin-section">
+                <h3>Add New Tournament</h3>
+                <form id="addTournamentForm" class="tournament-form">
+                    <div class="form-row">
+                        <input type="text" id="adminEventName" placeholder="Tournament Name" class="input-box" required>
+                        <input type="text" id="adminEventDesc" placeholder="Description (Prize, Slots, Mode)" class="input-box" required>
+                    </div>
+                    <div class="form-row">
+                        <input type="datetime-local" id="adminEventDate" class="input-box" required>
+                        <input type="number" id="adminMaxTeams" placeholder="Max Teams" class="input-box" min="1" required>
+                    </div>
+                    <div class="form-row">
+                        <input type="text" id="adminPrizePool" placeholder="Prize Pool (e.g., ₹50,000)" class="input-box" required>
+                        <select id="adminGameMode" class="input-box" required>
+                            <option value="">Select Game Mode</option>
+                            <option value="Classic">Classic</option>
+                            <option value="Ranked">Ranked</option>
+                            <option value="Battle Royale">Battle Royale</option>
+                            <option value="Custom">Custom</option>
+                        </select>
+                    </div>
+                    <div class="form-row">
+                        <select id="adminStatus" class="input-box" required>
+                            <option value="upcoming">Upcoming</option>
+                            <option value="ongoing">Ongoing</option>
+                            <option value="completed">Past</option>
+                        </select>
+                        <input type="text" id="adminRules" placeholder="Rules (optional)" class="input-box">
+                    </div>
+                    <button type="submit" class="btn-main">Add Tournament</button>
+                </form>
+
+                <h3>Active Tournaments</h3>
+                <div id="tournamentsList" class="admin-table">
+                    <div class="table-header">
+                        <span>Name</span>
+                        <span>Date & Time</span>
+                        <span>Prize Pool</span>
+                        <span>Max Teams</span>
+                        <span>Status</span>
+                        <span>Actions</span>
+                    </div>
+                    <div class="table-body">
+                        <!-- Tournaments will be loaded here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="registrationsTab" class="admin-tab-content">
+            <div class="admin-section">
+                <h3>Tournament Registrations (<span id="pendingCount">0</span>)</h3>
+                <div id="registrationsTable" class="admin-table">
+                    <div class="table-header">
+                        <span>Team</span>
+                        <span>Tournament</span>
+                        <span>Captain</span>
+                        <span>Status</span>
+                        <span>Date</span>
+                        <span>Actions</span>
+                    </div>
+                    <div id="registrationsList" class="table-body">
+                        <p>Loading registrations...</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div id="orgsTab" class="admin-tab-content">
+            <div class="admin-section">
+                <h3>Registered Teams</h3>
+                <div id="teamsList" class="admin-table">
+                    <div class="table-header">
+                        <span>Team Name</span>
+                        <span>Captain</span>
+                        <span>Email</span>
+                        <span>Tournament</span>
+                        <span>Size</span>
+                    </div>
+                    <div class="table-body">
+                        <!-- Teams will be loaded here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="admin-actions">
+            <button id="logoutBtn" class="btn-close">Logout</button>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="container footer-grid">
+            <div class="footer-about">
+                <div class="logo">ELA<span>ESPORTS</span></div>
+                <p class="about-text">The National Free Fire Esports Authority of India.</p>
+                <div class="ffm-tag">Official FFM Community Partner</div>
+            </div>
+            <div class="footer-links">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="about.html">About Authority</a></li>
+                    <li><a href="events.html">Tournaments</a></li>
+                    <li><a href="index.html#join">Register ORG</a></li>
+                </ul>
+            </div>
+            <div class="footer-contact">
+                <h4>Official Contact</h4>
+                <p>Partnerships: <span>collab@elaesports.in</span></p>
+                <p>Verification Support: <span>support@elaesports.in</span></p>
+                <p>Instagram: <span>@ela_esports</span></p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 ELA ESPORTS. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Admin Panel Protection -->
+    <!-- Admin protection handled by main script.js -->
+
+    <script type="module" src="script.js"></script>
+</body>
+</html>

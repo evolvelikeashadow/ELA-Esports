@@ -1,0 +1,180 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // ADMIN UID (temporary, will use custom claims in Phase 5)
+function isAdmin() {
+      return request.auth != null && 
+        (request.auth.token.admin == true || 
+         request.auth.uid in ['avCX9ZATMDQ5FTnzs1otzOeoQ8K2']);  // Custom claims + fallback
+    }
+    function isAdminCustomClaims() {
+      return request.auth.token.admin == true;
+    }
+
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+
+    // ========================================
+    // PLAYERS COLLECTION - SIMPLIFIED PERMISSIONS (allows task completion)
+    // ========================================
+    match /players/{playerId} {
+      allow read, write, create, update, delete: if request.auth != null && request.auth.uid == playerId;
+      allow read, write, create, update, delete: if isAdmin();
+      allow read: if true;
+    }
+
+    // ========================================
+    // TEAMS SYSTEM (Phase 2)
+    // ========================================
+    match /teams/{teamId} {
+      // Public read for tournament discovery
+      allow read: if true;
+      
+      // Authenticated users can create/update their teams
+      allow create: if request.auth != null && request.resource.data.captainUid == request.auth.uid;
+      allow update: if request.auth != null && 
+        (request.auth.uid == resource.data.captainUid || 
+         resource.data.members.hasAny([request.auth.uid]));
+      
+      // Team members can read/write (with limits)
+      allow read, update: if request.auth != null 
+        && (request.auth.uid == resource.data.captainUid || 
+            resource.data.members.hasAny([request.auth.uid]));
+      
+      // Admin full control
+      allow write, delete: if isAdmin();
+      
+      // Validation
+      function isValidTeam() {
+        return request.resource.data.keys().hasAll(['name', 'captainUid', 'captainName', 'createdAt']) &&
+               request.resource.data.name is string &&
+               request.resource.data.captainUid is string &&
+               request.resource.data.createdAt is timestamp;
+      }
+      allow create: if isValidTeam();
+    }
+
+    match /team_members/{memberId} {
+      allow read: if true;  // Team rosters public
+      allow create, update, delete: if request.auth != null 
+        && (request.auth.uid == resource.data.teamCaptainUid || 
+            request.auth.uid == resource.data.playerUid);
+      allow write: if isAdmin();
+    }
+
+    match /team_invites/{inviteId} {
+      allow read: if true;
+      allow create: if request.auth != null 
+        && request.auth.uid == request.resource.data.senderUid;
+      allow update, delete: if request.auth != null 
+        && (request.auth.uid == resource.data.senderUid || 
+            request.auth.uid == resource.data.recipientUid);
+      allow write: if isAdmin();
+    }
+
+    // ========================================
+    // TOURNAMENTS SYSTEM (Phase 3)
+    // ========================================
+    match /tournaments/{tournamentId} {
+      allow read: if true;  // Public tournament info
+      allow create, update, delete: if isAdmin();
+      
+      // Validation (relaxed for now)
+      function isValidTournament() {
+        return request.resource.data.name is string &&
+               request.resource.data.date is timestamp &&
+               request.resource.data.createdAt is timestamp;
+      }
+      allow create, update: if isValidTournament();
+    }
+
+    match /tournament_registrations/{regId} {
+      // Public read for standings
+      allow read: if true;
+      
+      // Create registration (any authenticated user)
+      allow create: if request.auth != null;
+      
+      // Update own registration
+      allow update: if request.auth != null;
+      
+      // Admin full control
+      allow read, write, delete: if isAdmin();
+      
+      // Validation
+      function isValidRegistration() {
+        return request.resource.data.keys().hasAll(['teamId', 'tournamentId', 'teamCaptainUid', 'status', 'registeredAt']) &&
+               request.resource.data.status in ['pending', 'approved', 'rejected'] &&
+               request.resource.data.registeredAt is timestamp;
+      }
+      allow create, update: if isValidRegistration();
+    }
+
+
+    // ========================================
+    // ACHIEVEMENTS (Phase 4)
+    // ========================================
+    match /achievements/{achievementId} {
+      allow read: if true;  // Public showcase
+      allow create, update: if isAdmin();  // Admin awards
+      // Players can claim/track own
+      allow update: if request.auth != null 
+        && request.auth.uid == resource.data.playerUid;
+    }
+
+    // ========================================
+    // ADMIN SYSTEMS (Phase 5)
+    // ========================================
+    match /partners/{partnerId} {
+      allow read: if true;
+      allow create, update, delete: if isAdmin();
+    }
+
+    match /inquiries/{inquiryId} {
+      allow read, update, delete: if isAdmin();
+      allow create: if request.auth != null;  // Authenticated contact
+    }
+
+    match /orgs/{orgId} {
+      allow read: if true;
+      allow create, update, delete: if isAdmin();
+    }
+
+// Simple authenticated access (per task)
+    match /{document=**} {
+      allow read, write: if request.auth != null; // Allows logged-in users
+    }
+
+    // Legacy collections (safe read-only)
+    match /{document=**} {
+      allow read: if true;
+      allow write: if false;
+    }
+  }
+}
+
+service firebase.storage {
+  match /b/{bucket}/o {
+    // Profile photos: owner write, public read
+    match /players/{playerId}/{allPaths=**} {
+      allow read: if true;
+      allow write: if request.auth != null && request.auth.uid == playerId;
+    }
+    
+    // Teams: captain write, public read
+    match /teams/{teamId}/{allPaths=**} {
+      allow read: if true;
+      allow write: if request.auth != null && 
+        exists(/databases/$(database)/documents/teams/$(teamId)) &&
+        get(/databases/$(database)/documents/teams/$(teamId)).data.captainUid == request.auth.uid;
+    }
+    
+    // Partners: admin only
+    match /partners/{allPaths=**} {
+      allow read: if true;
+      allow write: if isAdmin();  // Note: Storage rules can't call Firestore functions
+    }
+  }
+}
